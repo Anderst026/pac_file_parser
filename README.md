@@ -73,3 +73,10 @@ top of the file (malformed input) is clamped to depth 0 rather than going
 negative and breaking later detection. The one edge the parser does not handle
 is a regex literal whose contents affect brace or paren balance — see the
 trade-off note above.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
